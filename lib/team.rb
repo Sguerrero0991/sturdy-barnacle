@@ -14,21 +14,31 @@ class Team
        @roster << player
     end
 
-    def long_term_players
-        @contract_length > 2
+    def contract_longer_than_2_years?
+        @contract_length > 24
     end
 
-    def short_term_players
-        @contract_length < 2
+    def contract_shorter_than_2_years?
+        @contract_length < 24
+    end
+
+    def long_term_players(player)
+        @roster.select do |players|
+            players.contract_longer_than_2_years? == player
+        end
+    end
+
+    def short_term_players(player)
+        @roster.select do |players|
+            players.contract_shorter_than_2_years? == player
+        end 
     end
 
     def total_value
         @roster.total_cost
     end
-
-
+end
 
 #* Player is considered a long term player if their contract length is greater than two years.
 #* Player is considered a short term player if their contract length is two years or less.
 #* Payroll is the total cost of all of the players.
-end
